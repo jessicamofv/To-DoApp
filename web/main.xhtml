@@ -1,0 +1,157 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <h:head>
+        <title>My Web App's Title</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css" />
+        <h:outputStylesheet library="css" name="Main.css" />
+        <h:outputScript library="js" name="bootstrap.min.js" />
+        <h:outputScript library="js" name="jquery-1.11.1.js" />
+        <h:outputScript library="js" name="main.js" />
+    </h:head>
+    <h:body>
+        <div class="container">
+            <div class="row">
+                <nav class="navbar navbar-default navbar-inverse navbar-fixed-top" role="navigation">
+                    <div class="navbar-header">
+                        <button type="button" class="navbar-toggle" data-toggle="collapse"
+                                data-target="#collapse">
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                            <span class="icon-bar"></span>
+                        </button>
+                    </div>
+                    <div class="collapse navbar-collapse" id="collapse">
+                        <h:panelGroup id="menu">
+                            <h:form>
+                                <ul class="nav navbar-nav">
+                                <li class="#{appManager.homeTabClass}"><h:commandLink action="#{appManager.switchToScreen(appManager.homeScreen)}">
+                                    Home
+                                </h:commandLink></li>
+                                <li class="#{appManager.myProgressTabClass}"><h:commandLink action="#{appManager.switchToScreen(appManager.myProgressScreen)}">
+                                    MyProgress
+                                </h:commandLink></li>
+                                <li><h:commandLink action="#{userManager.logOut()}">
+                                    Log Out
+                                </h:commandLink></li>
+                                </ul>
+                            </h:form>
+                        </h:panelGroup>
+                    </div>
+                </nav>
+            </div>
+            <br />
+            <h:panelGroup id="home" rendered="#{appManager.isViewingHomeScreen()}">
+                <h:form class="form-horizontal" id="addForm">
+                    <div class="form-group">
+                    <!--<h:panelGrid id="itemGrid" columns="2">-->
+                        <div class="col-lg-5 col-md-6 col-sm-7 col-xs-8 col-md-offset-2 col-sm-offset-1">
+                            <h:inputText class="input-lg form-control" id="listItem" disabled="#{appManager.waitingOrPast}" value="#{appManager.listItem}" />
+                        </div>
+                        <div class="col-xs-1">
+                            <h:commandButton type="submit" class="btn btn-primary btn-lg" id="add" disabled="#{appManager.waitingOrPast}" value="Add to To-Do List">
+                                <f:ajax event="action" execute="addForm" render="addForm" listener="#{appManager.doPreAddChecks()}" />           
+                            </h:commandButton>
+                        </div>
+                        <!--<h:commandButton id="add" disabled="{appManager.waitingForDifficulty} || {appManager.pastList}" type="submit" image="{appManager.addImagePath}">
+                            <f:ajax event="action" execute="addForm" render="addForm" listener="{appManager.doPreAddChecks()}" />
+                        </h:commandButton>-->
+                    <!--</h:panelGrid>-->
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-3 col-xs-offset-4" id="errorMessage">
+                            <h:messages layout="table" showDetail="true"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6 col-xs-push-4">
+                            <h:commandButton type="button" class="btn btn-success btn-lg #{appManager.difficultyClass}" id="easy" value="Easy">
+                                <f:ajax event="action" render="addForm :itemsListForm" listener="#{appManager.addToList('easy')}" />
+                            </h:commandButton>&nbsp;
+                            <h:commandButton type="button" class="btn btn-warning btn-lg #{appManager.difficultyClass}" id="medium" value="Medium">
+                                <f:ajax event="action" render="addForm :itemsListForm" listener="#{appManager.addToList('medium')}" />
+                            </h:commandButton>&nbsp;
+                            <h:commandButton type="button" class="btn btn-danger btn-lg #{appManager.difficultyClass}" id="hard" value="Hard">
+                                <f:ajax event="action" render="addForm :itemsListForm" listener="#{appManager.addToList('hard')}" />
+                            </h:commandButton>
+                        </div>
+                    </div>
+                </h:form>
+                <br />
+                <h:form class="form-horizontal" id="listChangingForm">
+                    <div class="form-group">
+                    <!--<h:panelGrid id="listChangingGrid" columns ="3">-->
+                        <div class="col-xs-1 col-xs-offset-3">
+                            <h2><h:commandLink id="leftArrow" disabled="#{appManager.waitingForDifficulty}">
+                                <span class="glyphicon glyphicon-chevron-left"></span>
+                                <f:ajax event="action" render="listChangingForm :addForm :itemsListForm" listener="#{appManager.goToPreviousDaysList()}" />
+                            </h:commandLink></h2>
+                        </div>
+                        <div class="col-xs-3">
+                            <h2><h:outputText class="listDate" value="#{appManager.viewingListDate}" /></h2>
+                        </div>
+                        <div class="col-xs-1">
+                            <h2><h:commandLink id="rightArrow" disabled="#{appManager.waitingForDifficulty}">
+                                <span class="glyphicon glyphicon-chevron-right"></span>
+                                <f:ajax event="action" render="listChangingForm :addForm :itemsListForm" listener="#{appManager.goToNextDaysList()}" />
+                            </h:commandLink></h2>
+                        </div>
+                    <!--</h:panelGrid>-->
+                    </div>
+                </h:form>
+                <br />
+                <h:form class="form-horizontal" id="itemsListForm">
+                    <div class="row">
+                        <h1><h:outputText value="#{appManager.listHeader}" /></h1>
+                    </div>
+                    <div class="row">
+                        <div class="#{appManager.hrClass}">
+                            <hr />
+                        </div>
+                    </div>
+                    <ui:repeat
+                        value="#{appManager.listItems}"
+                        var="listItem"
+                        varStatus="myVarStatus" 
+                        size="#{appManager.maxItemsToDisplay}"
+                        offset="#{appManager.itemIndex}">
+                        <!--<h:panelGrid id="itemsGrid" columns="1">-->
+                        <div class ="row">
+                            <div class="col-xs-4" id="#{appManager.getNumId(listItem.toLowerCase())}">
+                                #{appManager.getItemNum(listItem.toLowerCase())}.
+                                <span class="listItem" id="#{appManager.getItemId(listItem.toLowerCase())}" draggable="true" ondragstart="drag(event)" ondragover="allowDrop(event)" ondrop="drop(event)">
+                                    <h:commandLink class="#{appManager.getDifficultyClass(listItem.toLowerCase())} #{appManager.getItemStatus(listItem.toLowerCase())}">
+                                    #{listItem}
+                                    <f:ajax event="action" render="@form" listener="#{appManager.markAsDone(listItem.toLowerCase())}" />
+                                    </h:commandLink>
+                                    <h:inputHidden value="#{appManager.timeInterval}" />
+                                    <h:inputHidden value="#{appManager.itemAndNum}" />
+                                    <h:commandLink>
+                                        <span class="remove"></span>
+                                    </h:commandLink>
+                                </span>
+                            </div>
+                        </div>
+                            <!--<f:ajax event="mouseover" render="@form" listener="{appManager.showDone(listItem.toLowerCase())}" />
+                            <f:ajax event="mouseout" render="@form" listener="{appManager.hideDone(listItem.toLowerCase())}" />-->
+                            <!--<h:commandButton class="doneButton" rendered="{appManager.getDoneVisibility(listItem.toLowerCase())}" image="./resources/images/Done.png">
+                                <f:ajax event="action" render="@form" listener="{appManager.markAsDone(listItem.toLowerCase())}" />
+                            </h:commandButton><br />-->
+                        <!--</h:panelGrid>-->
+                    </ui:repeat>
+                    <h:commandButton id="removeHelper" class="hide">
+                        <f:ajax event="action" execute="@form" />           
+                    </h:commandButton>
+                </h:form>
+            </h:panelGroup>
+            <h:panelGroup id="myProgress" rendered="#{appManager.isViewingMyProgressScreen()}">
+                <ui:include src="myProgress.xhtml" />
+            </h:panelGroup>
+        </div>
+    </h:body>
+</html>

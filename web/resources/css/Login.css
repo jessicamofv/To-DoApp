@@ -1,0 +1,36 @@
+/* 
+    Document   : Login
+    Created on : Jan 5, 2014, 12:16:39 AM
+    Author     : Jessica
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*#logo, #buttonDiv
+{
+    text-align:center;
+}
+
+#userNameDiv
+{
+    position:relative;
+    left:557px;
+    width:227px;
+}
+
+#passwordDiv
+{
+    position:relative;
+    left:560px;
+    width:227px;
+}
+
+#userNameDiv, #passwordDiv
+{
+    margin:5px;
+}*/
+
+#messageDiv
+{
+    color:red;
+}

@@ -1,0 +1,122 @@
+/* 
+    Document   : Main
+    Created on : Jan 7, 2014, 6:54:20 PM
+    Author     : Jessica
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+body
+{
+    padding-top: 70px;
+}
+
+.nav-tabs .active a
+{
+    font-weight: bold;
+}
+
+/*#menu
+{
+    text-align:center;
+}
+
+#addForm
+{
+    margin-left:425px;
+}*/
+
+#listChangingForm
+{
+    /*margin-left:500px;*/
+    font-size:16pt;
+}
+
+/*#listChangingGrid
+{
+    text-align:center;
+}*/
+
+/*.listDate
+{
+    font-size:24pt;
+    font-weight:bold;
+}*/
+
+/*.listMyProgHeader
+{
+    font-size:28pt;
+    font-weight:bold;
+}*/
+
+.item
+{
+    font-size:20pt;
+}
+
+#errorMessage
+{
+    /*text-align:center;*/
+    font-size:15pt;
+    color:red;
+}
+
+.easy
+{
+    color:#00FF00;
+}
+
+a.easy:hover
+{
+    color:#00FF00;
+    text-decoration:none;
+}
+
+.medium
+{
+    color:#FFC90E;
+}
+
+a.medium:hover
+{
+    color:#FFC90E;
+    text-decoration:none;
+}
+
+.hard
+{
+    color:red;
+}
+
+a.hard:hover
+{
+    color:red;
+    text-decoration:none;
+}
+
+a.done:hover
+{
+    text-decoration: line-through;
+}
+
+#itemsListForm
+{
+    /*position:absolute;
+    top:200px;*/
+    font-size:20pt;
+}
+
+.notWaiting, .hide
+{
+    display:none;
+}
+
+.done
+{
+    text-decoration:line-through;
+}
+
+#myProgGrid
+{
+    font-size:16pt;
+}
