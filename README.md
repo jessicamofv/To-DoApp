@@ -1,4 +1,4 @@
 To-DoApp
 ========
 
-A web app for managing a daily to-do list.
+Java EE web app for managing daily to-do list.
